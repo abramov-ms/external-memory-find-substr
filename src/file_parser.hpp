@@ -16,12 +16,11 @@ class FileParser {
     std::size_t line;
     std::size_t column;
   };
-  
-  explicit FileParser(): file_(Config::Instance().GetFile()) {
+
+  explicit FileParser(std::ifstream& file): file_(file) {
   }
 
-  std::vector<std::ifstream::pos_type>
-  FindOccurrences(const std::string& pattern);
+  std::vector<Occurrence> FindOccurrences(const std::string& pattern);
 
  private:
   std::ifstream& file_;
