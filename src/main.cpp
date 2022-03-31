@@ -13,10 +13,10 @@ int main() {
         break;
       }
     } catch (ExternalMemoryFindSubstrException& exc) {
-      std::cout << exc.what() << std::endl;
+      std::cout << "<< " << exc.what() << std::endl;
     } catch (std::exception& exc) {
-      std::cout << "Something really unexpected happened." << std::endl;
-      std::cout << exc.what() << std::endl;
+      std::cout << "<< " << "Something really unexpected happened." << std::endl;
+      std::cout << "<< " << exc.what() << std::endl;
       return 0;
     }
   }

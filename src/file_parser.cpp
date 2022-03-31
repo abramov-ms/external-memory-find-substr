@@ -24,7 +24,7 @@ FileParser::FindOccurrences(const std::string& pattern) {
           {
               file_.tellg() - std::streamoff(pattern.size()),
               line,
-              column
+              column - pattern.size()
           });
     }
 
