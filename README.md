@@ -27,6 +27,7 @@ $ cd build
 $ cmake ..
 $ make
 $ 
+$ #launch:
 $ ./external_memory_find_substr
 ```
 
@@ -45,6 +46,7 @@ usage:
     disable context -- do not
 ```
 
-Пример: поиск по тексту ["Harry Potter and Methods of Rationality"](resources/HPMOR.txt).
+Пример: поиск по тексту
+["Harry Potter and Methods of Rationality"](https://royallib.com/book/Yudkowsky_Eliezer/Harry_Potter_and_the_Methods_of_Rationality.html).
 
 ![example](resources/example.png)
