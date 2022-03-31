@@ -12,7 +12,7 @@ Basically `grep` but no bloat. Используется для поиска по
 
 # Описание алгоритма
 
-Обычный КМП за `O(|pattern|)` по памяти и `O(|pattern| + |text|)` по времени.
+Обычный КМП за `O(|pattern|)` по памяти и `O(|pattern| + |text|)` по времени на запрос.
 
 Программа считает префикс-функцию, как если бы она вычислялась для строки `pattern#text`,
 но при этом в каждый момент времени хранится только префикс-функция паттерна и `O(1)` доп. информации.
@@ -45,6 +45,6 @@ usage:
     disable context -- do not
 ```
 
-Пример: поиск по тексту "Harry Potter and Methods of Rationality".
+Пример: поиск по тексту ["Harry Potter and Methods of Rationality"](resources/HPMOR.txt).
 
 ![example](resources/example.png)
