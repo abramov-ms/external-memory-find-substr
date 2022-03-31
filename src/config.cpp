@@ -10,7 +10,8 @@ Config& Config::Instance() {
 void Config::SetFile(const std::string &filename) {
   file_ = std::ifstream(filename);
   if (!file_.is_open()) {
-    throw ExternalMemoryFindSubstrException("could not open the file");
+    throw ExternalMemoryFindSubstrException(
+        "could not open file " + filename);
   }
 
   filename_ = filename;
@@ -18,7 +19,7 @@ void Config::SetFile(const std::string &filename) {
 
 std::ifstream& Config::GetFile() {
   if (!file_.is_open()) {
-    throw ExternalMemoryFindSubstrException("no file loaded");
+    throw ExternalMemoryFindSubstrException("no file is loaded");
   }
 
   return file_;
@@ -26,7 +27,7 @@ std::ifstream& Config::GetFile() {
 
 const std::string& Config::GetFilename() const {
   if (!file_.is_open()) {
-    throw ExternalMemoryFindSubstrException("no file loaded");
+    throw ExternalMemoryFindSubstrException("no file is loaded");
   }
 
   return filename_;

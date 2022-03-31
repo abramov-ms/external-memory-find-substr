@@ -33,11 +33,19 @@ void FindOccurrences() {
     std::cout << '\n';
   }
 
-  std::cout << "Found " << occurrences.size() << " occurrences." << std::endl;
+  std::cout << "<< Found " << occurrences.size() << " occurrences." << std::endl;
 }
 
 void ShowUsage() {
-  std::cout << "Usage: ..." << std::endl;
+  std::cout <<
+    "usage:\n"
+    "    current file -- show currently loaded file path\n"
+    "    load file -- switch to another file\n"
+    "    find -- find pattern in currently loaded file\n"
+    "    current context size -- get current context size\n"
+    "    set context size -- use another context size\n"
+    "    enable context -- show context of occurrences\n"
+    "    disable context -- do not" << std::endl;
 }
 
 }
