@@ -26,8 +26,10 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ 
-$ #launch:
+```
+
+Запуск:
+```
 $ ./external_memory_find_substr
 ```
 
