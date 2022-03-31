@@ -39,6 +39,8 @@ bool ConsoleClient::ProcessUserQuery() {
     Config::Instance().SetContextMode(false);
   } else if (query == "find") {
     FindOccurrences();
+  } else if (query == "help") {
+    ShowUsage();
   } else {
     os_ << "<< " << "unknown command `" << query << "`" << std::endl;
     ShowUsage();

@@ -14,10 +14,6 @@ class ConsoleClient {
 
   bool ProcessUserQuery();
 
-  ~ConsoleClient() {
-    os_ << "Search done. Have a good day!" << std::endl;
-  }
-
  private:
   void ShowUsage();
   void FindOccurrences();
