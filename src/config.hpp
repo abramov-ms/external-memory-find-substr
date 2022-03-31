@@ -12,7 +12,11 @@ class Config {
   static Config& Instance();
 
   std::ifstream& GetFile() { return file_; }
-  void SetFile(std::ifstream&& file) { file_ = std::move(file); }
+  const std::string& GetFilename() const { return filename_; }
+  void SetFile(const std::string& filename) {
+    filename_ = filename;
+    file_ = std::ifstream(filename_);
+  }
 
   std::size_t GetContextSize() const { return context_size_; }
   void SetContextSize(std::size_t size) { context_size_ = size; }
@@ -24,6 +28,7 @@ class Config {
   explicit Config() = default;
 
   std::ifstream file_;
+  std::string filename_;
   std::size_t context_size_{kDefaultContextSize};
   bool show_occurrences_{kDefaultShowOccurrences};
 };

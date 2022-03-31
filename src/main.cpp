@@ -2,6 +2,7 @@
 #include "file_parser.hpp"
 #include "file_context.hpp"
 #include "config.hpp"
+#include "console_client.hpp"
 
 #include <iostream>
 
@@ -14,27 +15,33 @@ int main() {
     std::cout << ">> ";
 
     std::string query;
-    std::cin >> query;
+    std::getline(std::cin, query);
     if (query == "exit") {
       break;
     }
 
-    if (query == "load") {
+    if (query == "show file") {
+      std::cout << "<< " << Config::Instance().GetFilename() << std::endl;
+    } else if (query == "load file") {
       std::string filename;
-      std::cin >> filename;
-      Config::Instance().SetFile(std::ifstream(filename));
+      std::cout << "path to file >> ";
+      std::getline(std::cin, filename);
+      Config::Instance().SetFile(filename);
     } else if (query == "find") {
       std::string pattern;
-      std::cin >> pattern;
+      std::cout << "pattern >> ";
+      std::getline(std::cin, pattern);
 
       auto occurrences = parser.FindOccurrences(pattern);
-      for (const auto& occurrence: occurrences) {
-        auto context = filesystem::GetContext(
-            Config::Instance().GetFile(), occurrence,
-            pattern.size(), Config::Instance().GetContextSize()
-        );
+      if (Config::Instance().GetShowOccurrences()) {
+        for (const auto &occurrence : occurrences) {
+          auto context = filesystem::GetContext(
+              Config::Instance().GetFile(), occurrence,
+              pattern.size(), Config::Instance().GetContextSize()
+          );
 
-        std::cout << "..." << context << "..." << std::endl;
+          std::cout << "..." << context << "..." << std::endl;
+        }
       }
       std::cout << "Found " << occurrences.size() << " occurrences." << std::endl;
     }

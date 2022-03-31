@@ -11,6 +11,12 @@ namespace external_memory_find_substr::filesystem {
 
 class FileParser {
  public:
+  struct Occurrence {
+    std::ifstream::pos_type pos;
+    std::size_t line;
+    std::size_t column;
+  };
+  
   explicit FileParser(): file_(Config::Instance().GetFile()) {
   }
 
