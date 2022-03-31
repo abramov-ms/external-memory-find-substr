@@ -4,15 +4,15 @@
 #include <iostream>
 
 int main() {
-  using namespace external_memory_find_substr;
+  auto client = external_memory_find_substr::ConsoleClient(std::cin, std::cout);
 
-  while (true) {
+  for (;;) {
     try {
-      auto exit_query = ProcessUserQuery();
+      auto exit_query = client.ProcessUserQuery();
       if (exit_query) {
         break;
       }
-    } catch (ExternalMemoryFindSubstrException& exc) {
+    } catch (external_memory_find_substr::ExternalMemoryFindSubstrException& exc) {
       std::cout << "<< " << exc.what() << std::endl;
     } catch (std::exception& exc) {
       std::cout << "<< " << "Something really unexpected happened." << std::endl;
@@ -20,6 +20,4 @@ int main() {
       return 0;
     }
   }
-
-  std::cout << "Search done. Have a good day!" << std::endl;
 }
