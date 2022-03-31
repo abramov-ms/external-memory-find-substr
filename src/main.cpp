@@ -1,8 +1,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
-std::vector<size_t> PrefixFunction(const std::string& subject) {
+std::vector<size_t> PrefixFunction(const std::string &subject) {
   std::vector<size_t> prefix_function;
   prefix_function.reserve(subject.size());
   prefix_function.push_back(0);
@@ -10,7 +11,7 @@ std::vector<size_t> PrefixFunction(const std::string& subject) {
   for (size_t i = 1; i < subject.size(); ++i) {
     size_t prev_suprefix_size = prefix_function[i - 1];
     while (prev_suprefix_size > 0 &&
-           subject[prev_suprefix_size] != subject[i]) {
+        subject[prev_suprefix_size] != subject[i]) {
       prev_suprefix_size = prefix_function[prev_suprefix_size - 1];
     }
 
@@ -25,29 +26,57 @@ std::vector<size_t> PrefixFunction(const std::string& subject) {
   return prefix_function;
 }
 
-std::vector<size_t> KMP(const std::string& haystack,
-                        const std::string& needle) {
-  auto cat = needle + "#" + haystack;
-  auto prefix_function = PrefixFunction(cat);
-
-  std::vector<size_t> needle_occurences;
-  for (size_t i = 0; i < prefix_function.size(); ++i) {
-    if (prefix_function[i] == needle.size()) {
-      needle_occurences.push_back(i - 2 * needle.size());
-    }
+size_t PrefixFunctionNext(
+    const std::string &pattern,
+    const std::vector<std::size_t>& pattern_prefix_fn,
+    char next_text_char,
+    std::size_t prev_suprefix_size) {
+  std::size_t suprefix_size = prev_suprefix_size;
+  while (suprefix_size > 0 &&
+      (suprefix_size >= pattern.size() ||
+          pattern[suprefix_size] != next_text_char)) {
+    suprefix_size = pattern_prefix_fn[suprefix_size - 1];
   }
 
-  return needle_occurences;
+  if (suprefix_size < pattern.size() &&
+      next_text_char == pattern[suprefix_size]) {
+    ++suprefix_size;
+  }
+
+  return suprefix_size;
 }
 
 int main() {
-  std::string haystack;
-  std::string needle;
-  std::cin >> haystack >> needle;
+  std::string filename;
+  std::cout << "Path to text file: ";
+  std::cin >> filename;
 
-  auto needle_occurences = KMP(haystack, needle);
-  for (const auto& position : needle_occurences) {
-    std::cout << position << '\n';
+  std::ifstream file(filename);
+
+  size_t occurrences = 0;
+  while (true) {
+    std::string query;
+    std::cout << "> ";
+    std::cin >> query;
+
+    if (query == "exit") {
+      break;
+    }
+
+    auto query_prefix_fn = PrefixFunction(query);
+    int next_text_char;
+    size_t suprefix_size = 0;
+    while ((next_text_char = file.get()) != EOF) {
+      suprefix_size =
+          PrefixFunctionNext(query, query_prefix_fn,
+                             static_cast<char>(next_text_char), suprefix_size);
+      if (suprefix_size == query.size()) {
+        std::cout << "Found occurrence!" << std::endl;
+        ++occurrences;
+      }
+    }
   }
-}
 
+  std::cout << "Found " << occurrences << " occurrences." << std::endl;
+  std::cout << "Search done. Have a good day!" << std::endl;
+}
